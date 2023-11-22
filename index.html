@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/39eba3e6fd.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="container">
+    <div class="overlay">
+        <div class="music-player">
+
+            <h1>Anoosh Playlist</h1>
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+
+            <img src="media/Screenshot 2023-11-20 163643.png" class="song-img">
+            <h1 id="songTitle">Kiliye Kiliye</h1>
+            <p id="songDescription">Guts-come Closer</p>
+
+            <audio controls id="song">
+                <source src="media/ytmp3free.cc_killi-killi-telugu-full-hd-movie-song-pawan-kalyan-telugu-videos-youtubemp3free.org.mp3" type="audio/mpeg">
+            </audio>
+            <input type="range" value="0" id="progress">
+
+            <div class="controls">
+                <div class="backward"><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
+                <div class="forward"><i class="fa-solid fa-forward"></i></div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        let progress = document.getElementById("progress");
+        let song = document.getElementById("song");
+        let ctrlIcon = document.getElementById("ctrlIcon");
+        let songIndex = 0;
+        let songImg = document.querySelector(".song-img");
+        let container = document.querySelector(".container");
+        let forwardButton = document.querySelector(".controls .forward");
+        let backwardButton = document.querySelector(".controls .backward");
+        let songTitle = document.getElementById("songTitle");
+        let songDescription = document.getElementById("songDescription");
+
+        let songs = [
+            "media/ytmp3free.cc_killi-killi-telugu-full-hd-movie-song-pawan-kalyan-telugu-videos-youtubemp3free.org.mp3",
+            "media/ytmp3free.cc_kiliye-kiliye-guts-come-closer-dj-sekhar-s-janaki-full-version-youtubemp3free.org.mp3",
+            "media/Dum Masala Lyrical Song _ Guntur Kaaram Songs _ Mahesh Babu _ Trivikram _ Thaman S _S. Radha Krishna.mp3",
+            "media/JAWAN_ Chaleya (Hindi) _ Shah Rukh Khan _ Nayanthara _ Atlee _ Anirudh _ Arijit S, Shilpa R _ Kumaar.mp3",
+            "media/Karu Karu Karupayi - Video Song _ Eazhaiyin Sirippil _ Prabhu Deva, Kausalya, Roja _ Deva _K. Subash.mp3",
+            "media/Naan Gaali Music Video _ Good Night _Manikandan, Meetha Raghunath_Sean Roldan_Vinayak Chandrasekaran.mp3",
+            "media/Narasimha Movie __ O Kick Ekkele Video Song __ Rajnikanth , Soundarya , Ramya Krishna.mp3",
+
+        ];
+
+        let images = [
+            "media/maxresdefault.jpg",
+            "media/Screenshot 2023-11-20 163643.png",
+            "media/Dum masala.jpeg",
+            "media/Jaawan.jpg",
+            "media/karu karu.jpg",
+            "media/naan gaali.jpg",
+            "media/narasimha.jpg",
+        ];
+
+        let titles = [
+    "Killi Killi Telugu - Pawan Kalyan",
+    "Kiliye Kiliye - DJ Sekhar S, Janaki",
+    "Dum Masala ",
+    "JAWAN Chaleya (Hindi)",
+    "Karu Karu Karupayi",
+    "Naan Gaali Music",
+    "Narasimha Movie - O Kick Ekkele",
+];
+
+let descriptions = [
+    "Telugu song from Pawan Kalyan.",
+    "Original version by DJ Sekhar S and Janaki.",
+    "Lyrical song with Mahesh Babu, Trivikram, Thaman",
+    "Hindi song featuring Shah Rukh Khan, Nayanthara.",
+    "Song from 'Eazhaiyin Sirippil' with Prabhu Deva, Kausalya.",
+    "Music video with Manikandan, Sean Roldan.",
+    "Song from 'Narasimha' with Rajnikanth, Soundarya.",
+];
+
+
+        
+        songImg.src = images[0];
+        songTitle.textContent = titles[0];
+        songDescription.textContent = descriptions[0];
+
+        song.onloadedmetadata = function () {
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        }
+
+        function playPause() {
+            if (ctrlIcon.classList.contains("fa-pause")) {
+                song.pause();
+                ctrlIcon.classList.remove("fa-pause");
+                ctrlIcon.classList.add("fa-play");
+            } else {
+                song.play();
+                ctrlIcon.classList.add("fa-pause");
+                ctrlIcon.classList.remove("fa-play");
+            }
+        }
+
+    //     function changeSong(direction) {
+    //         if (direction === 'forward') {
+    //             songIndex = (songIndex + 1) % songs.length;
+    //         } else if (direction === 'backward') {
+    //             songIndex = (songIndex - 1 + songs.length) % songs.length;
+    //         }
+
+
+    //         console.log("Changing song to index:", songIndex);
+
+
+    //         const tempImage = new Image();
+    //         tempImage.src = images[songIndex];
+    //         tempImage.onload = function () {
+    //     // Once the image is loaded, update the background
+    //         container.style.backgroundImage = `url(${images[songIndex]})`;
+    //         songImg.src = images[songIndex];
+    // };
+
+    //         song.src = songs[songIndex];
+    //         song.load();
+    //         playPause();
+
+            
+    //         songTitle.textContent = titles[songIndex];
+    //         songDescription.textContent = descriptions[songIndex];
+    //     }
+
+    function changeSong(direction) {
+    if (direction === 'forward') {
+        songIndex = (songIndex + 1) % songs.length;
+    } else if (direction === 'backward') {
+        songIndex = (songIndex - 1 + songs.length) % songs.length;
+    }
+
+    console.log("Changing song to index:", songIndex);
+
+    // Function to preload image
+    function preloadImage(url) {
+        return new Promise((resolve, reject) => {
+            const tempImage = new Image();
+            tempImage.onload = resolve;
+            tempImage.onerror = reject;
+            tempImage.src = url;
+        });
+    }
+
+    // Preload the image and update background after loading
+    preloadImage(images[songIndex])
+        .then(() => {
+            container.style.backgroundImage = `url(${images[songIndex]})`;
+            songImg.src = images[songIndex];
+            container.style.background = "white";
+        })
+        .catch((error) => {
+            console.error("Error preloading image:", error);
+        });
+
+    song.src = songs[songIndex];
+    song.load();
+    playPause();
+
+    songTitle.textContent = titles[songIndex];
+    songDescription.textContent = descriptions[songIndex];
+}
+
+
+
+        forwardButton.addEventListener("click", function () {
+            changeSong('forward');
+        });
+
+        backwardButton.addEventListener("click", function () {
+            changeSong('backward');
+        });
+
+        setInterval(() => {
+            progress.value = song.currentTime;
+        }, 500);
+
+        progress.onchange = function () {
+            song.currentTime = progress.value;
+            playPause();
+        }
+    </script>
+    
+</body>
+</html>
